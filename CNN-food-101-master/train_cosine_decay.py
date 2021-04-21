@@ -65,12 +65,6 @@ def build_model():
   outputs = tf.keras.layers.Dense(NUM_CLASSES, activation=tf.keras.activations.softmax)(x)
   return tf.keras.Model(inputs=inputs, outputs=outputs)
   
-def decayed_learning_rate(step):
-  step = min(step, decay_steps)
-  cosine_decay = 0.5 * (1 + cos(pi * step / decay_steps))
-  decayed = (1 - alpha) * cosine_decay + alpha
-  return initial_learning_rate * decayed
-  
 lr_decayed_fn = tf.keras.experimental.CosineDecay(
     initial_learning_rate, decay_steps)
     
