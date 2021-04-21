@@ -55,6 +55,7 @@ def create_dataset(filenames, batch_size):
     .prefetch(tf.data.AUTOTUNE)
 
 initial_learning_rate = 0.1
+decay_steps = 1000
 
 def build_model():
   inputs = tf.keras.Input(shape=(RESIZE_TO, RESIZE_TO, 3))
@@ -65,14 +66,13 @@ def build_model():
   return tf.keras.Model(inputs=inputs, outputs=outputs)
   
 def decayed_learning_rate(step):
-  decay_steps = 1000
   step = min(step, decay_steps)
   cosine_decay = 0.5 * (1 + cos(pi * step / decay_steps))
   decayed = (1 - alpha) * cosine_decay + alpha
   return initial_learning_rate * decayed
   
 lr_decayed_fn = tf.keras.experimental.CosineDecay(
-    initial_learning_rate)
+    initial_learning_rate, decay_steps)
     
 lrate = LearningRateScheduler(lr_decayed_fn)
 
