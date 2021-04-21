@@ -55,7 +55,7 @@ def create_dataset(filenames, batch_size):
     .prefetch(tf.data.AUTOTUNE)
 
 initial_learning_rate = 0.01
-decay_steps = 1000
+decay_steps = 2000
 
 def build_model():
   inputs = tf.keras.Input(shape=(RESIZE_TO, RESIZE_TO, 3))
