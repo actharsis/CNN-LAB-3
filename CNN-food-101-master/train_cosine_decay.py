@@ -95,7 +95,7 @@ def main():
     epochs=50,
     validation_data=validation_dataset,
     callbacks=[
-      tf.keras.callbacks.TensorBoard(log_dir), lrate
+      tf.keras.callbacks.TensorBoard[log_dir, lrate],
     ]
   )
 
