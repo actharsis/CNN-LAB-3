@@ -11,6 +11,8 @@ import glob
 import numpy as np
 import tensorflow as tf
 import time
+from math import cos
+from math import pi
 from tensorflow.keras.applications import EfficientNetB0
 from tensorflow.python import keras as keras
 from tensorflow.python.keras.callbacks import LearningRateScheduler
@@ -55,6 +57,7 @@ def create_dataset(filenames, batch_size):
     .prefetch(tf.data.AUTOTUNE)
 
 initial_learning_rate = 0.001
+alpha = 0.0
 decay_steps = 2000
 
 def build_model():
@@ -65,10 +68,16 @@ def build_model():
   outputs = tf.keras.layers.Dense(NUM_CLASSES, activation=tf.keras.activations.softmax)(x)
   return tf.keras.Model(inputs=inputs, outputs=outputs)
   
-lr_decayed_fn = tf.keras.experimental.CosineDecay(
-    initial_learning_rate, decay_steps)
+def decayed_learning_rate(step):
+  step = min(step, decay_steps)
+  cosine_decay = 0.5 * (1 + cos(pi * step / decay_steps))
+  decayed = (1 - alpha) * cosine_decay + alpha
+  learning_rate = initial_learning_rate * decayed
+
+  tf.summary.scalar('learning rate', data=learning_rate, step=step)
+  return learning_rate
     
-lrate = LearningRateScheduler(lr_decayed_fn)
+lrate = LearningRateScheduler(decayed_learning_rate)
 
 
 def main():
@@ -95,7 +104,8 @@ def main():
     epochs=50,
     validation_data=validation_dataset,
     callbacks=[
-      tf.keras.callbacks.TensorBoard[log_dir, lrate],
+      tf.keras.callbacks.TensorBoard(log_dir),
+      lrate
     ]
   )
 
