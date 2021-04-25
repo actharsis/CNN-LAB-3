@@ -44,5 +44,17 @@ def decayed_learning_rate(step):
 График темпа обучения:
 ![gr5](https://github.com/actharsis/lab3/blob/main/graphs/learning%20rate_cosine.svg)
 ## Косинусное затухание с перезапусками
+Файл: `CNN-food-101-master/train_cosine_restarts.py`
+```python
+lr_decayed_fn = (
+  tf.keras.experimental.CosineDecayRestarts(
+      initial_learning_rate,
+      first_decay_steps))
+lrate = LearningRateScheduler(lr_decayed_fn, verbose=1)
+```
+Метрика качества:
 
+Функция потерь:
+
+График темпа обучения:
 ## Анализ результатов
