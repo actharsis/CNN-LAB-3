@@ -1,9 +1,7 @@
 # Изучение влияние параметра “темп обучения” на процесс обучения нейронной сети на примере решения задачи классификации Food-101 с использованием техники обучения Transfer Learning
 ## Фиксированный темп обучения в сочетании с Transfer Learning
-Файл:
-```
-CNN-food-101-master/transfer_train.py
-```
+Файл: `CNN-food-101-master/transfer_train.py`
+
 Архитектура:
 ```python
 inputs = tf.keras.Input(shape=(RESIZE_TO, RESIZE_TO, 3))
@@ -21,10 +19,8 @@ return tf.keras.Model(inputs=inputs, outputs=outputs)
 Функция потерь:
 ![gr2](https://github.com/actharsis/lab3/blob/main/graphs/epoch_loss_const_lr.svg)
 ## Косинусное затухание
-Файл:
-```
-CNN-food-101-master/train_cosine_decay.py
-```
+Файл: `CNN-food-101-master/train_cosine_decay.py`
+
 ```python
 def decayed_learning_rate(step):
   step = min(step, decay_steps)
@@ -35,12 +31,30 @@ def decayed_learning_rate(step):
   tf.summary.scalar('learning rate', data=learning_rate, step=step)
   return learning_rate
 ```
+Был использован initial_learning_rate=0.01 и следующие значения decay_steps: 1000, 50, 10
 
+![Legend2](https://user-images.githubusercontent.com/24518594/116000077-70a07080-a5f7-11eb-870f-9204a4fa18b6.png)
+
+Метрика качества:
+![gr3](https://github.com/actharsis/lab3/blob/main/graphs/epoch_categorical_accuracy_cosine.svg)
+
+Функция потерь:
+![gr4](https://github.com/actharsis/lab3/blob/main/graphs/epoch_loss_cosine.svg)
+
+График темпа обучения:
+![gr5](https://github.com/actharsis/lab3/blob/main/graphs/learning%20rate_cosine.svg)
+## Косинусное затухание с перезапусками
+Файл: `CNN-food-101-master/train_cosine_restarts.py`
+```python
+lr_decayed_fn = (
+  tf.keras.experimental.CosineDecayRestarts(
+      initial_learning_rate,
+      first_decay_steps))
+lrate = LearningRateScheduler(lr_decayed_fn, verbose=1)
+```
 Метрика качества:
 
 Функция потерь:
 
 График темпа обучения:
-## Косинусное затухание с перезапусками
-
 ## Анализ результатов
