@@ -28,6 +28,9 @@ NUM_CLASSES = 101
 RESIZE_TO = 224
 TRAIN_SIZE = 101000
 
+file_writer = tf.summary.create_file_writer(log_dir + "/lr")
+file_writer.set_as_default()
+
 
 def parse_proto_example(proto):
   keys_to_features = {
@@ -66,11 +69,14 @@ def build_model():
   outputs = tf.keras.layers.Dense(NUM_CLASSES, activation=tf.keras.activations.softmax)(x)
   return tf.keras.Model(inputs=inputs, outputs=outputs)
   
-lr_decayed_fn = (
-  tf.keras.experimental.CosineDecayRestarts(
-      initial_learning_rate,
-      first_decay_steps))
-lrate = LearningRateScheduler(lr_decayed_fn, verbose=1)
+def decayed_learning_rate(step):
+  learning_rate = tf.compat.v1.train.cosine_decay_restarts(
+    initial_learning_rate, step, first_decay_steps)
+
+  tf.summary.scalar('learning rate', data=learning_rate, step=step)
+  return learning_rate
+
+lrate = LearningRateScheduler(decayed_learning_rate)
 tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir)
 
 
