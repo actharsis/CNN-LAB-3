@@ -30,6 +30,9 @@ NUM_CLASSES = 101
 RESIZE_TO = 224
 TRAIN_SIZE = 101000
 
+file_writer = tf.summary.create_file_writer(log_dir + "/lr")
+file_writer.set_as_default()
+
 
 def parse_proto_example(proto):
   keys_to_features = {
@@ -58,7 +61,7 @@ def create_dataset(filenames, batch_size):
     .prefetch(tf.data.AUTOTUNE)
 
 initial_learning_rate = 0.001
-alpha = 0.5
+alpha = 0.0
 decay_steps = 1000
 
 def build_model():
