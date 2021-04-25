@@ -1,9 +1,7 @@
 # Изучение влияние параметра “темп обучения” на процесс обучения нейронной сети на примере решения задачи классификации Food-101 с использованием техники обучения Transfer Learning
 ## Фиксированный темп обучения в сочетании с Transfer Learning
-Файл:
-```
-CNN-food-101-master/transfer_train.py
-```
+Файл: `CNN-food-101-master/transfer_train.py`
+
 Архитектура:
 ```python
 inputs = tf.keras.Input(shape=(RESIZE_TO, RESIZE_TO, 3))
@@ -21,10 +19,8 @@ return tf.keras.Model(inputs=inputs, outputs=outputs)
 Функция потерь:
 ![gr2](https://github.com/actharsis/lab3/blob/main/graphs/epoch_loss_const_lr.svg)
 ## Косинусное затухание
-Файл:
-```
-CNN-food-101-master/train_cosine_decay.py
-```
+Файл: `CNN-food-101-master/train_cosine_decay.py`
+
 ```python
 def decayed_learning_rate(step):
   step = min(step, decay_steps)
