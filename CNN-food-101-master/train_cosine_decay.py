@@ -24,6 +24,7 @@ for gpu in gpus:
 
 
 LOG_DIR = 'logs'
+log_dir='{}/f101-{}'.format(LOG_DIR, time.time())
 BATCH_SIZE = 64
 NUM_CLASSES = 101
 RESIZE_TO = 224
@@ -56,8 +57,8 @@ def create_dataset(filenames, batch_size):
     .batch(batch_size)\
     .prefetch(tf.data.AUTOTUNE)
 
-initial_learning_rate = 0.01
-alpha = 0.0
+initial_learning_rate = 0.001
+alpha = 0.5
 decay_steps = 1000
 
 def build_model():
@@ -78,6 +79,7 @@ def decayed_learning_rate(step):
   return learning_rate
     
 lrate = LearningRateScheduler(decayed_learning_rate)
+tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir)
 
 
 def main():
@@ -98,13 +100,12 @@ def main():
     metrics=[tf.keras.metrics.categorical_accuracy],
   )
 
-  log_dir='{}/f101-{}'.format(LOG_DIR, time.time())
   model.fit(
     train_dataset,
     epochs=50,
     validation_data=validation_dataset,
     callbacks=[
-      tf.keras.callbacks.TensorBoard(log_dir),
+      tensorboard_callback,
       lrate
     ]
   )
