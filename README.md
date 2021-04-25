@@ -35,12 +35,16 @@ def decayed_learning_rate(step):
   tf.summary.scalar('learning rate', data=learning_rate, step=step)
   return learning_rate
 ```
+![Legend2](https://user-images.githubusercontent.com/24518594/116000077-70a07080-a5f7-11eb-870f-9204a4fa18b6.png)
 
 Метрика качества:
+![gr3](https://github.com/actharsis/lab3/blob/main/graphs/epoch_categorical_accuracy_cosine.svg)
 
 Функция потерь:
+![gr4](https://github.com/actharsis/lab3/blob/main/graphs/epoch_loss_cosine.svg)
 
 График темпа обучения:
+![gr5](https://github.com/actharsis/lab3/blob/main/graphs/learning%20rate_cosine.svg)
 ## Косинусное затухание с перезапусками
 
 ## Анализ результатов
