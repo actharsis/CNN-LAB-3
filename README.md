@@ -31,6 +31,8 @@ def decayed_learning_rate(step):
   tf.summary.scalar('learning rate', data=learning_rate, step=step)
   return learning_rate
 ```
+Был использован initial_learning_rate=0.01 и следующие значения decay_steps: 1000, 50, 10
+
 ![Legend2](https://user-images.githubusercontent.com/24518594/116000077-70a07080-a5f7-11eb-870f-9204a4fa18b6.png)
 
 Метрика качества:
