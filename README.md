@@ -49,6 +49,7 @@ def decayed_learning_rate(step):
 learning_rate = tf.keras.experimental.CosineDecayRestarts(initial_learning_rate, first_decay_steps)
 ```
 initial_learning_rate = 0.001, first_decay_steps: 10, 100
+
 Метрика качества:
 
 Функция потерь:
