@@ -11,6 +11,8 @@ x = tf.keras.layers.GlobalAveragePooling2D()(model.output)
 outputs = tf.keras.layers.Dense(NUM_CLASSES, activation=tf.keras.activations.softmax)(x)
 return tf.keras.Model(inputs=inputs, outputs=outputs)
 ```
+Вариации learning_rate: 0.01, 0.001, 0.0001
+
 ![legend1](https://user-images.githubusercontent.com/24518594/115959624-c866ab00-a515-11eb-8171-506fd726d86a.png)
 
 Метрика качества:
@@ -46,15 +48,14 @@ def decayed_learning_rate(step):
 ## Косинусное затухание с перезапусками
 Файл: `CNN-food-101-master/train_cosine_restarts.py`
 ```python
-lr_decayed_fn = (
-  tf.keras.experimental.CosineDecayRestarts(
-      initial_learning_rate,
-      first_decay_steps))
-lrate = LearningRateScheduler(lr_decayed_fn, verbose=1)
+learning_rate = tf.keras.experimental.CosineDecayRestarts(initial_learning_rate, first_decay_steps)
 ```
+initial_learning_rate = 0.001, first_decay_steps: 10, 100
+
 Метрика качества:
 
 Функция потерь:
 
 График темпа обучения:
 ## Анализ результатов
+При изучении фиксированного темпа обучения оптимальным оказался темп 0.0001, он показал наивысшую точность - 66% на валидации. В случае с косинусным затуханием оптимальной комбинацией параметров был initial_learning_rate=0.01 и decay_steps=10, несмотря на то, что при таких параметрах темп обучения после 10 эпохи равен нулю, точность на валидации составила 67.1%, что на 1.1% больше, чем при фиксированном темпе. При использовании косинусного затухание с перезапусками оптимальными подобранными параметрами оказались initial_learning_rate=0.01 и first_decay_steps=100, максимальная точность на валидации составила 67.36%: на 1.36% больше, чем наилучший результат при фиксированном темпе обучения, таким образом эта политика оказалась наиболее эффективной.
