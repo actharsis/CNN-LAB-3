@@ -23,7 +23,7 @@ for gpu in gpus:
 
 LOG_DIR = 'logs'
 log_dir='{}/f101-{}'.format(LOG_DIR, time.time())
-BATCH_SIZE = 32
+BATCH_SIZE = 16
 NUM_CLASSES = 101
 RESIZE_TO = 224
 TRAIN_SIZE = 101000
