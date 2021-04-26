@@ -37,10 +37,10 @@ def decayed_learning_rate(step):
 
 ![Legend2](https://user-images.githubusercontent.com/24518594/116000077-70a07080-a5f7-11eb-870f-9204a4fa18b6.png)
 
-Метрика качества:
+Метрика качества на валидации:
 ![gr3](https://github.com/actharsis/lab3/blob/main/graphs/epoch_categorical_accuracy_cosine.svg)
 
-Функция потерь:
+Функция потерь на валидации:
 ![gr4](https://github.com/actharsis/lab3/blob/main/graphs/epoch_loss_cosine.svg)
 
 График темпа обучения:
@@ -54,10 +54,10 @@ initial_learning_rate = 0.001, first_decay_steps: 10, 100
 
 ![Legend3](https://user-images.githubusercontent.com/24518594/116113261-018f4e80-a6c1-11eb-8d6a-7385f891cce7.png)
 
-Метрика качества:
+Метрика качества на валидации:
 ![gr6](https://github.com/actharsis/lab3/blob/main/graphs/cosine_restart/epoch_categorical_accuracy.svg)
 
-Функция потерь:
+Функция потерь на валидации:
 ![gr7](https://github.com/actharsis/lab3/blob/main/graphs/cosine_restart/epoch_loss.svg)
 
 ![Screenshot_1](https://user-images.githubusercontent.com/24518594/116113386-21bf0d80-a6c1-11eb-9ec8-1ae97b5c0a5f.png)
