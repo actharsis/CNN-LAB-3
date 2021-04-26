@@ -69,15 +69,7 @@ def build_model():
   outputs = tf.keras.layers.Dense(NUM_CLASSES, activation=tf.keras.activations.softmax)(x)
   return tf.keras.Model(inputs=inputs, outputs=outputs)
   
-def decayed_learning_rate(step):
-  learning_rate = tf.compat.v1.train.cosine_decay_restarts(
-    initial_learning_rate, step, first_decay_steps)
-
-  tf.summary.scalar('learning rate', data=learning_rate, step=step)
-  return learning_rate
-
-lrate = LearningRateScheduler(decayed_learning_rate)
-tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir)
+learning_rate = tf.keras.experimental.CosineDecayRestarts(initial_learning_rate, first_decay_steps)
 
 
 def main():
@@ -93,7 +85,7 @@ def main():
   model = build_model()
 
   model.compile(
-    optimizer=tf.optimizers.Adam(),
+    optimizer=tf.optimizers.Adam(learning_rate=learning_rate),
     loss=tf.keras.losses.categorical_crossentropy,
     metrics=[tf.keras.metrics.categorical_accuracy],
   )
@@ -103,8 +95,7 @@ def main():
     epochs=50,
     validation_data=validation_dataset,
     callbacks=[
-      tensorboard_callback,
-      lrate
+      tf.keras.callbacks.TensorBoard(log_dir)
     ]
   )
 
