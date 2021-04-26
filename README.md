@@ -47,6 +47,20 @@ def decayed_learning_rate(step):
 ![gr5](https://github.com/actharsis/lab3/blob/main/graphs/learning%20rate_cosine.svg)
 
 Также были попытки менять initial_learning_rate(от 0.0001 до 0.5), при высоких значениях функция потерь была очень высокой(около 20 к 5 эпохе) и показатели точности всего лишь 55%. При маленьких значениях initial_learning_rate функция ошибок к 10 эпохе была не выше 3, но несмотря на это итоговая точность на валидации была ниже, чем при фиксированном темпе обучения, обучение с явно неудачными параметрами прерывалось к 10-15 эпохе, поэтому в итоге было принято решение использовать начальный темп 0.001 и в дальнешем варьировать лишь decay_steps.
+
+Графики для неудачных попыток:
+
+![Legendf1](https://github.com/actharsis/lab3/blob/main/graphs/cosine_fail/Legend.png)
+
+Метрика качества:
+![grf1](https://github.com/actharsis/lab3/blob/main/graphs/cosine_fail/epoch_categorical_accuracy.svg)
+
+Функция потерь на валидации:
+![grf2](https://github.com/actharsis/lab3/blob/main/graphs/cosine_fail/epoch_loss.svg)
+
+График темпа обучения:
+![grf3](https://github.com/actharsis/lab3/blob/main/graphs/cosine_fail/learning%20rate.svg)
+
 ## Косинусное затухание с перезапусками
 Файл: `CNN-food-101-master/train_cosine_restarts.py`
 ```python
@@ -69,5 +83,22 @@ initial_learning_rate = 0.001, first_decay_steps: 10, 100
 ![gr8](https://github.com/actharsis/lab3/blob/main/graphs/cosine_restart/epoch_learning_rate.svg)
 
 Как и в случае с косинусным затуханием, изменение initial_learning_rate давало плохие результаты: потери в точности больше 5% на валидации в случае с большими значениями и около 3% в случае со слишком маленькими, изменение first_decay_steps слабо сказывалось на результатах, поэтому опять было принято решение зафиксировать initial_learning_rate на 0.001
+
+Графики для неудачных попыток:
+
+![Legendf2](https://github.com/actharsis/lab3/blob/main/graphs/cosine_restart_fail/Legend1.png)
+
+Метрика качества:
+![grf4](https://github.com/actharsis/lab3/blob/main/graphs/cosine_restart_fail/epoch_categorical_accuracy.svg)
+
+Функция потерь на валидации:
+![grf5](https://github.com/actharsis/lab3/blob/main/graphs/cosine_restart_fail/epoch_loss.svg)
+
+График темпа обучения:
+
+![Legendf2](https://github.com/actharsis/lab3/blob/main/graphs/cosine_restart_fail/Legend2.png)
+
+![grf6](https://github.com/actharsis/lab3/blob/main/graphs/cosine_fail/learning%20rate.svg)
+
 ## Анализ результатов
 При изучении фиксированного темпа обучения оптимальным оказался темп 0.0001, он показал наивысшую точность - 66% на валидации. В случае с косинусным затуханием оптимальной комбинацией параметров был initial_learning_rate=0.01 и decay_steps=10, несмотря на то, что при таких параметрах темп обучения после 10 эпохи равен нулю, точность на валидации составила 67.1%, что на 1.1% больше, чем при фиксированном темпе. При использовании косинусного затухание с перезапусками оптимальными подобранными параметрами оказались initial_learning_rate=0.01 и first_decay_steps=100, максимальная точность на валидации составила 67.36%: на 1.36% больше, чем наилучший результат при фиксированном темпе обучения, таким образом эта политика оказалась наиболее эффективной. Наивысшие значения точности вне зависимости от всех политик достигались в промежутке 7-15 эпох. Скорее всего можно было достигнуть ещё более хороших результатов варьируя параметры.
