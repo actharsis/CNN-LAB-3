@@ -52,10 +52,19 @@ learning_rate = tf.keras.experimental.CosineDecayRestarts(initial_learning_rate,
 ```
 initial_learning_rate = 0.001, first_decay_steps: 10, 100
 
+![Legend3](https://user-images.githubusercontent.com/24518594/116113261-018f4e80-a6c1-11eb-8d6a-7385f891cce7.png)
+
 Метрика качества:
+![gr6](https://github.com/actharsis/lab3/blob/main/graphs/cosine_restart/epoch_categorical_accuracy.svg)
 
 Функция потерь:
+![gr7](https://github.com/actharsis/lab3/blob/main/graphs/cosine_restart/epoch_loss.svg)
+
+![Screenshot_1](https://user-images.githubusercontent.com/24518594/116113386-21bf0d80-a6c1-11eb-9ec8-1ae97b5c0a5f.png)
+![Screenshot_3](https://user-images.githubusercontent.com/24518594/116113400-24216780-a6c1-11eb-927d-77d58719fcea.png)
 
 График темпа обучения:
+![gr8](https://github.com/actharsis/lab3/blob/main/graphs/cosine_restart/epoch_learning_rate.svg)
+
 ## Анализ результатов
 При изучении фиксированного темпа обучения оптимальным оказался темп 0.0001, он показал наивысшую точность - 66% на валидации. В случае с косинусным затуханием оптимальной комбинацией параметров был initial_learning_rate=0.01 и decay_steps=10, несмотря на то, что при таких параметрах темп обучения после 10 эпохи равен нулю, точность на валидации составила 67.1%, что на 1.1% больше, чем при фиксированном темпе. При использовании косинусного затухание с перезапусками оптимальными подобранными параметрами оказались initial_learning_rate=0.01 и first_decay_steps=100, максимальная точность на валидации составила 67.36%: на 1.36% больше, чем наилучший результат при фиксированном темпе обучения, таким образом эта политика оказалась наиболее эффективной.
