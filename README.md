@@ -11,6 +11,7 @@ x = tf.keras.layers.GlobalAveragePooling2D()(model.output)
 outputs = tf.keras.layers.Dense(NUM_CLASSES, activation=tf.keras.activations.softmax)(x)
 return tf.keras.Model(inputs=inputs, outputs=outputs)
 ```
+Вариации learning_rate: 0.01, 0.001, 0.0001
 ![legend1](https://user-images.githubusercontent.com/24518594/115959624-c866ab00-a515-11eb-8171-506fd726d86a.png)
 
 Метрика качества:
