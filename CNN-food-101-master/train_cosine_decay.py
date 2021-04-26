@@ -62,7 +62,7 @@ def create_dataset(filenames, batch_size):
 
 initial_learning_rate = 0.1
 alpha = 0.0
-decay_steps = 10
+decay_steps = 100
 
 def build_model():
   inputs = tf.keras.Input(shape=(RESIZE_TO, RESIZE_TO, 3))
