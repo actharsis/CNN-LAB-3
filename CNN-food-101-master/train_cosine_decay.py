@@ -60,7 +60,7 @@ def create_dataset(filenames, batch_size):
     .batch(batch_size)\
     .prefetch(tf.data.AUTOTUNE)
 
-initial_learning_rate = 0.001
+initial_learning_rate = 0.1
 alpha = 0.0
 decay_steps = 10
 
